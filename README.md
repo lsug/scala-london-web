@@ -1,8 +1,8 @@
-# Scala Vienna UG Webapp
+# Scala London UG Webapp
 
 [![Build Status](https://travis-ci.org/scala-vienna/scala-vienna-web.png)](https://travis-ci.org/scala-vienna/scala-vienna-web)
 
-This is the [Play](http://www.playframework.com) application that powers the web presence of the [Vienna Scala User Group](http://scala-vienna.org)!
+This is the [Play](http://www.playframework.com) application that powers the web presence of the [London Scala User Group](http://lsug.uk)!
 
 ##Feature Highlights
 
