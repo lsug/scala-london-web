@@ -1,0 +1,99 @@
+@(title: String, posts: List[service.Post], tags: List[(String, Int)], authors: List[String])
+
+@layout.main("Blogs", "blogs") {
+
+    <div class="container">
+        <div id='blogs-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+
+            <h1>Blog Posts</h1>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                    <canvas id="tagCanvas" width="255" height="255"></canvas>
+                    <div id="tagList" style="display: none;">
+                        <ul>
+                            @tags.map { pair =>
+                            <li><a href="./blogs?tag=@pair._1" data-weight="@{pair._2}">@pair._1</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                    <h4>Recent</h4>
+                    @posts.map { post =>
+                    <div class="one-liner"><a href="#@post.title" >@post.title</a></div>
+                    }
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                    <h4>
+                        Authors
+                        <small>
+                            (<a href="./blogs" >show all</a>)
+                        </small>
+                    </h4>
+                    @authors.map { author =>
+                    <div class="one-liner"><a href="./blogs?author=@author" >@author</a></div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+            @posts.map { post =>
+            <div class="row">
+                <a name="@post.title"></a>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <a href="@post.link" target="_blank">@post.title</a>
+                            <br>
+                            <small>@post.publishedDate.map(_.format("dd.MM.yyyy HH:mm")) by <a href="./blogs?author=@post.author">@post.author</a></a></small>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        @Html(post.description.getOrElse(""))
+                        <div class="tags">
+                            Tags:
+                            @post.categories.map { category =>
+                                <span class="tag">
+                                    <a href="./blogs?tag=@category">#@category</a>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    <script>
+        window.onload = function() {
+            TagCanvas.textFont = 'Trebuchet MS, Helvetica, sans-serif';
+            TagCanvas.textColour = '#00f';
+            TagCanvas.textHeight = 25;
+            TagCanvas.outlineColour = '#ff9999';
+            TagCanvas.maxSpeed = 0.03;
+            TagCanvas.minBrightness = 0.2;
+            TagCanvas.depth = 0.92;
+            TagCanvas.pulsateTo = 0.6;
+            TagCanvas.initial = [0,0.2];
+            //TagCanvas.lock = 'x';
+            TagCanvas.decel = 0.98;
+            TagCanvas.reverse = true;
+            TagCanvas.hideTags = false;
+            TagCanvas.outlineMethod = 'colour';
+            TagCanvas.shadow = '#ccf';
+            TagCanvas.shadowBlur = 3;
+            TagCanvas.weight = true;
+            TagCanvas.weightMode = 'both';
+            TagCanvas.weightFrom = 'data-weight';
+            TagCanvas.weightSize = 10.0;
+            TagCanvas.wheelZoom = false;
+            TagCanvas.imageScale = null;
+            TagCanvas.fadeIn = 1000;
+            //TagCanvas.shape = 'hring';
+            TagCanvas.Start('tagCanvas', 'tagList');
+        }
+    </script>
+}

@@ -1,0 +1,33 @@
+@(page: String)
+
+@*
+* Navigation bar showing the current active page
+*@
+<div class="navbar-wrapper">
+    <div class="container">
+
+        <div class="row navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@routes.Application.index()">lsug.uk</a>
+                </div>
+                <div id="main-navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a @if(page == "talks") {class="active"} href="@routes.Application.talks()">Talks</a></li>
+                        <li><a @if(page == "group") {class="active"} href="@routes.Application.blogs()">Blogs</a></li>
+                        <li><a @if(page == "photos") {class="active"} href="@routes.Application.photos()">Photos</a></li>
+                        <li><a @if(page == "group") {class="active"} href="https://groups.google.com/forum/?hl=en#!forum/scala-london" target="_blank">Mailing List</a></li>
+                        <li><a @if(page == "jobs") {class="active"} href="https://groups.google.com/forum/?hl=en#!forum/london-scala-jobs" target="_blank">Jobs Board</a></li>
+                        <li><a @if(page == "about") {class="active"} href="@routes.Application.about()">About</a></li>
+                    </ul>
+                </div>
+        </div>
+
+    </div>
+</div>
+

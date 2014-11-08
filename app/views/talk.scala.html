@@ -1,0 +1,117 @@
+@(talk: Option[service.Talk], speakers:Seq[String], tags:Seq[String], dates:Seq[String], photos: Seq[service.Photo])
+@layout.main("Talks", "talks") {
+
+<div class="container">
+	<div id='talks-sidebar' class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+    	<strong><em>Speakers</em></strong><br/>
+    	@for(speaker <- speakers) { 
+    		<a href="@routes.Application.talks(speaker=Some(speaker))" title="Filter" class="label label-info">@speaker</a> 
+    	}
+    	<hr/>
+    	<strong><em>Tags</em></strong><br/>
+    	@for(tag <- tags) { 
+    		<a href="@routes.Application.talks(tag=Some(tag))" title="Filter" class="badge">@tag</a> 
+    	}
+    	<hr/>
+    	<strong><em>Events</em></strong><br/>
+    	@for(date <- dates) { 
+    		<a href="@routes.Application.talks(date=Some(date))" title="Filter" class="label label-success">@date</a> 
+    	}
+    </div>
+	<div class="col-lg-9 col-md-8 col-sm-12 col-xs-12">
+		<div class="row">
+			<a href="@routes.Application.talks()">Back to all talks</a>
+			@if(talk.isEmpty) {
+				<div class="alert alert-warning">Sorry didn't find this one!</div>
+			} else {
+			<hr/>
+		   	<h3>@talk.get.title</h3>
+		   	<div class="col-lg-6">
+			   	<div class="panel panel-default">
+			   		<div class="panel-heading">@talk.get.speaker</div>
+					<div class="panel-body">
+						<table>
+					   	@talk.get.twitter.map { twitter =>
+					   		<tr>
+					   			<td>Twitter</td>
+					   			<td><a href="https://twitter.com/@twitter" target="_blank">@@@twitter</a></td>
+					   		</tr>
+					   	}
+					   	@talk.get.homepage.map { homepage =>
+					   		<tr>
+					   			<td>Homepage</td>
+					   			<td><a href="@homepage" target="_blank">@homepage</a></td>
+					   		</tr>
+					   	}
+					   	@talk.get.meetupMemberId.map{ id =>
+					   		<tr>
+					   			<td>Meetup</td>
+					   			<td><a href="http://www.meetup.com/scala-vienna/members/@id" target="_blank">http://www.meetup.com/scala-vienna/members/@id</a></td>
+					   		</tr>
+					   	}
+					   	</table>
+					</div>
+				</div>
+			</div>
+		   	<div class="col-lg-6">
+			   	<div class="panel panel-default">
+			   		<div class="panel-heading">Talk</div>
+					<div class="panel-body">
+						<table>
+					   	@talk.get.code.map { code =>
+					   		<tr>
+							   	<td>Code</td>
+							   	<td><a href="@code" target="_blank">@code</a></td>
+							</tr>
+					   	}
+						@talk.get.slides.map { slides =>
+							<tr> 
+								<td>Slides</td>
+								<td><a href="@slides" title="Slides of the talk" target="_blank">@slides</a></td>
+							</tr>
+						}
+						@talk.get.video.map { video =>
+							<tr> 
+								<td>Video</td>
+								<td><a href="@video" title="Video of the talk" target="_blank">@video</span></a></td>
+							</tr>
+						}
+					   	@talk.get.meetupEventId.map { meetupEventId =>
+					   		<tr>
+					   			<td>Meetup Event</td>
+					   			<td><a href="http://www.meetup.com/scala-vienna/events/@meetupEventId" target="_blank">http://www.meetup.com/scala-vienna/events/@meetupEventId</a></td>
+					   		</tr>
+					   	}
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		   	@talk.get.content
+		   	@if(!photos.isEmpty) {
+			<hr/>
+            <div class="row">
+            @photos.map { photo =>
+                <div class="col-lg-3 col-sm-3 col-xs-12 thumb">
+                    <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
+                        <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
+                    </a>
+                </div>
+            }
+            </div>
+            }
+			<hr/>
+			<a href="@routes.Application.talks()">Back to all talks</a>
+			}
+	    </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.image-link').magnificPopup({type:'image'});
+    })
+</script>
+
+}

@@ -1,0 +1,165 @@
+@(upcomingEvents: Seq[service.MeetupEvent],
+  pastEvents: Seq[service.MeetupEvent],
+  photos: Seq[service.Photo],
+  talks: Seq[service.Talk])
+
+@layout.main("Start", "start") {
+
+<a class="hidden-xs" href="https://github.com/scala-vienna/scala-vienna-web"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 100500;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+<!-- Front page image
+================================================== -->
+<div class="splash">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 hidden-xs">
+                <img class="img-responsive" src="@routes.Assets.at("images/lsug.jpeg")" alt="London Scala User Group Logo">
+            </div>
+            <div class="col-sm-8">
+                <h1>Welcome to the London Scala User Group!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+<!-- <div class="section-dark photos">
+<div class="container">
+
+    <div class="row">
+        @photos.map { photo =>
+            <div class="col-lg-3 col-sm-3 col-xs-12 thumb">
+                <a href="@photo.highresUrl" class="thumbnail with-caption image-link" title="@photo.caption">
+                    <img class="img-responsive" src="@photo.mediumUrl" alt="@if(photo.caption != "") { photo.caption }">
+                </a>
+            </div>
+        }
+    </div>
+
+</div>
+</div>
+    -->
+
+<div class="container">
+
+    <div class="row events">
+        <div class="col-lg-8 col-md-8 col-xs-12">
+            <div>
+                <div class="row" id="upcoming">
+                    <h2>Upcoming events</h2>
+                    @upcomingEvents.take(3).map { event =>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title event-title">@event.name<br><small>@event.displayTime @@ @event.venue.name</small></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="event-description">@event.description</div>
+                                <a class="btn btn-primary btn-sm pull-right" role="button" href="@event.url">Read more</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row" id="past">
+                    <h2>Past events</h2>
+                    @pastEvents.take(1).map { event =>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title event-title">@event.name<br><small>@event.displayTime @@ @event.venue.name</small></h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="event-description">@event.description</div>
+                                <a class="btn btn-primary btn-sm pull-right" role="button" href="@event.url">Read more</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-xs-12">
+            <!-- twitter test embedding -->
+            <a class="twitter-timeline" href="https://twitter.com/LondonScala" data-widget-id="531068553672155138">Tweets by @@LondonScala</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div class="container">
+<!--
+    <h2>Our Sponsors</h2>
+    <div class="row sponsors">
+        <div class="col-md-4">
+            <a href="http://www.openforce.at" title="openForce GmbH" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/openforce_logo.png')"></span>
+            </a>
+            <h3 class="sponsor-name">openForce GmbH</h3>
+        </div>
+        <div class="col-md-4">
+            <a href="http://www.sektor5.at" title="Sektor5 Coworking Spaces" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/sektor5_logo.png')"></span>
+            </a>
+            <h3 class="sponsor-name">Sektor5 Coworking Spaces</h3>
+        </div>
+        <div class="col-md-4">
+            <a href="http://www.stockwerk.co.at/" title="Stockwerk Coworking" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/stockwerk_logo.jpg')"></span>
+            </a>
+            <h3 class="sponsor-name">Stockwerk Coworking</h3>
+        </div>
+    </div>
+    <div class="row sponsors">
+        <div class="col-md-4">
+            <a href="http://www.oreilly.de/" title="O'Reilly Verlag" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/oreilly_badge.jpg')"></span>
+            </a>
+            <h3 class="sponsor-name">O'Reilly Verlag</h3>
+        </div>
+        <div class="col-md-4">
+            <a href="http://www.jetbrains.com/" title="JetBrains" target="_blank">
+                <span class="sponsor-img-container" style="background-image: url('/assets/images/logo_jetbrains.png')"></span>
+            </a>
+            <h3 class="sponsor-name">JetBrains</h3>
+        </div>
+        <div class="col-md-4">
+            <a href="http://www.manning.com/" title="Manning Publications" target="_blank">
+            <span class="sponsor-img-container" style="background-image: url('/assets/images/manning_badge.jpg')"></span>
+            </a>
+            <h3 class="sponsor-name">Manning Publications</h3>
+        </div>
+    </div>
+    <div class="row sponsors">
+        <div class="col-md-offset-2 col-md-4">
+            <a href="http://www.scala.io/" title="scala.io" target="_blank">
+                <span class="sponsor-img-container" style="background-image: url('/assets/images/scala-io.png')"></span>
+            </a>
+            <h3 class="sponsor-name">Scala.io</h3>
+        </div>
+        <div class="col-md-4">
+            <a href="http://www.typesafe.com/" title="Typesafe" target="_blank">
+                <span class="sponsor-img-container" style="background-image: url('/assets/images/typesafe_logo.png')"></span>
+            </a>
+            <h3 class="sponsor-name">Typesafe</h3>
+        </div>
+    </div>
+
+-->
+</div><!-- end container -->
+
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.event-description' ).dotdotdot({
+            after: 'a.readMore'
+        });
+
+        // Photo zoom
+        $('.image-link').magnificPopup({type:'image'});
+    })
+</script>
